@@ -1,9 +1,7 @@
-// app/api/auth/[...nextauth]/route.ts
-
-import NextAuth from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import Auth0Provider from "next-auth/providers/auth0";
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     Auth0Provider({
       clientId: process.env.AUTH0_CLIENT_ID!,
@@ -14,15 +12,12 @@ const handler = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, account, profile }) {
-      // Auth0'dan gelen ID token'dan role bilgisini alalım
       if (account && profile) {
         const claims = profile as any;
-        const roles = claims["https://example.com/roles"]; // bu claim'i birazdan tanımlayacağız
+        const roles = claims[process.env.AUTH0_ROLE_CLAIM!];
+
         token.role = roles?.[0] ?? "user";
       }
-
-      console.log("TOKEN:", token); // <<== Buraya ekledik
-
       return token;
     },
     async session({ session, token }) {
@@ -32,6 +27,4 @@ const handler = NextAuth({
       return session;
     },
   },
-});
-
-export { handler as GET, handler as POST };
+};

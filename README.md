@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Auth0 + NextAuth + JWT Authentication System
 
-## Getting Started
+Bu proje, Next.js 14 App Router ile Auth0 + NextAuth.js + JWT entegrasyonunu içeren bir kimlik doğrulama ve yetkilendirme sistemidir. Kullanıcılar Google OAuth üzerinden giriş yapar, oturumlar JWT ile korunur ve role (admin/user) bazlı sayfa erişimi sağlanır.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+##  Özellikler
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- ✅ Next.js 14 (App Router)
+- ✅ Auth0 + NextAuth.js OAuth Entegrasyonu
+- ✅ JWT ile oturum yönetimi
+- ✅ Middleware ile route bazlı yetkilendirme
+- ✅ Role-based access: `admin` / `user`
+- ✅ TypeScript + TailwindCSS + SOLID prensipleri
+- ✅ .env yapılandırması (12-Factor App uyumlu)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+##  Kullanılan Teknolojiler
 
-## Learn More
+- [Next.js](https://nextjs.org/)
+- [NextAuth.js](https://next-auth.js.org/)
+- [Auth0](https://auth0.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [JWT](https://jwt.io/)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+##  Giriş Akışı
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Kullanıcı, Google ile Auth0 üzerinden giriş yapar.
+2. NextAuth, JWT ile session oluşturur.
+3. Token içine `role` (admin/user) claim olarak eklenir.
+4. Session üzerinden `user.role` bilgisi alınır.
+5. Middleware ile korunan sayfalara sadece ilgili role sahip kullanıcılar erişebilir.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧩 Role Tabanlı Yetkilendirme
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Sayfa       | Erişim          |
+|-------------|-----------------|
+| `/`         | Herkes          |
+| `/admin`    | Sadece admin    |
+| `/unauthorized` | Yetkisiz erişimler yönlendirilir |
+
+---
+
+##  .env.local 
+
+AUTH0_CLIENT_ID=zesimg0hOdLFHo4QbbDqZ050IIXJqmmc
+AUTH0_CLIENT_SECRET=nIceuGE0iOypaiqtotRbSo87nX9IdT_jayNqYA268gotKplf06jcCLSKPlzixA0r
+AUTH0_ISSUER=https://dev-jti04v3lj8tay6zt.us.auth0.com
+NEXTAUTH_SECRET=88e9dfa50baada7358caf53e61ae2b91
+NEXTAUTH_URL=http://localhost:3000
+AUTH0_ROLE_CLAIM=https://example.com/roles
