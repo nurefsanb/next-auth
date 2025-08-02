@@ -2,11 +2,10 @@
 
 Bu proje, Next.js (App Router), Auth0 ve NextAuth.js kullanılarak geliştirilmiş JWT tabanlı bir **rol bazlı kimlik doğrulama ve yetkilendirme** sistemidir.
 
-Senior Frontend Developer pozisyonu için teknik değerlendirme amacıyla geliştirilmiştir.
 
 ---
 
-## 🔐 Özellikler
+##  Özellikler
 
 - Google ile **Auth0 OAuth giriş**
 - **JWT tabanlı oturum** yönetimi
@@ -20,7 +19,7 @@ Senior Frontend Developer pozisyonu için teknik değerlendirme amacıyla geliş
 
 ---
 
-## 🚀 Kullanılan Teknolojiler
+##  Kullanılan Teknolojiler
 
 - **Next.js 14 (App Router)**
 - **Auth0** (OAuth sağlayıcısı)
@@ -31,7 +30,7 @@ Senior Frontend Developer pozisyonu için teknik değerlendirme amacıyla geliş
 
 ---
 
-## 🛠️ Projeyi Çalıştırma
+##  Projeyi Çalıştırma
 
 Bu adımlar, projeyi kendi bilgisayarında çalıştırmak isteyen herkes içindir:
 
@@ -69,7 +68,7 @@ npm run dev
 
 ---
 
-## 🧪 Test Çalıştırma
+##  Test Çalıştırma
 
 ```bash
 npm test
@@ -80,7 +79,7 @@ Test altyapısı Jest + React Testing Library ile kuruludur.
 
 ---
 
-## 🧱 Proje Yapısı
+##  Proje Yapısı
 
 ```
 app/
@@ -103,7 +102,7 @@ __tests__/
 
 ---
 
-## 🐳 Docker 
+##  Docker 
 
 ```bash
 docker build -t next-auth-app .
@@ -112,7 +111,7 @@ docker run -p 3000:3000 next-auth-app
 
 ---
 
-## ✅ Admin Rolü Nasıl Eklenir?
+## Admin Rolü Nasıl Eklenir?
 
 Auth0 panelinden kullanıcıya özel bir claim tanımlayın:
 
@@ -128,9 +127,7 @@ Bu claim, JWT içinde yer alacak ve uygulama bunu `token.role` olarak alacaktır
 
 ---
 
----
-
-## 📌 Geliştiren
+##  Geliştiren
 
 **Nurefsan B.**  
 [GitHub → nurefsanb](https://github.com/nurefsanb)
