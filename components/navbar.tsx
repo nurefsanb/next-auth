@@ -1,10 +1,13 @@
 "use client";
 
 import { useSession, signIn, signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
+import clsx from "clsx"; // 👈 className yönetimi için önerilen mini helper
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+  const pathname = usePathname();
 
   const role = session?.user?.role;
 
@@ -14,21 +17,35 @@ export default function Navbar() {
         <Link href="/">MyApp</Link>
       </div>
 
-      <div className="flex gap-4 items-center">
-        <Link href="/">Home</Link>
+      <div className="flex gap-4 items-center text-sm">
+        <Link
+          href="/"
+          className={clsx(
+            "hover:underline",
+            pathname === "/" && "text-yellow-400 underline"
+          )}
+        >
+          Home
+        </Link>
 
         {role === "admin" && (
-          <Link href="/admin" className="text-red-400">
+          <Link
+            href="/admin"
+            className={clsx(
+              "text-red-400 hover:underline",
+              pathname === "/admin" && "underline text-yellow-400"
+            )}
+          >
             Admin Panel
           </Link>
         )}
 
         {status === "authenticated" ? (
           <>
-            <span className="text-sm opacity-70">Role: {role}</span>
+            <span className="opacity-70">Role: {role}</span>
             <button
               onClick={() => signOut()}
-              className="px-3 py-1 bg-red-500 hover:bg-red-600 rounded text-sm"
+              className="px-3 py-1 bg-red-500 hover:bg-red-600 rounded"
             >
               Logout
             </button>
@@ -36,7 +53,7 @@ export default function Navbar() {
         ) : (
           <button
             onClick={() => signIn("auth0")}
-            className="px-3 py-1 bg-blue-500 hover:bg-blue-600 rounded text-sm"
+            className="px-3 py-1 bg-blue-500 hover:bg-blue-600 rounded"
           >
             Login
           </button>
