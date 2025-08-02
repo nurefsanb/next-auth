@@ -1,57 +1,136 @@
-# Next.js Auth0 + NextAuth + JWT Authentication System
+# Next.js + Auth0 ile Rol Bazlı Kimlik Doğrulama Sistemi
 
-Bu proje, Next.js 14 App Router ile Auth0 + NextAuth.js + JWT entegrasyonunu içeren bir kimlik doğrulama ve yetkilendirme sistemidir. Kullanıcılar Google OAuth üzerinden giriş yapar, oturumlar JWT ile korunur ve role (admin/user) bazlı sayfa erişimi sağlanır.
+Bu proje, Next.js (App Router), Auth0 ve NextAuth.js kullanılarak geliştirilmiş JWT tabanlı bir **rol bazlı kimlik doğrulama ve yetkilendirme** sistemidir.
 
----
-
-##  Özellikler
-
-- ✅ Next.js 14 (App Router)
-- ✅ Auth0 + NextAuth.js OAuth Entegrasyonu
-- ✅ JWT ile oturum yönetimi
-- ✅ Middleware ile route bazlı yetkilendirme
-- ✅ Role-based access: `admin` / `user`
-- ✅ TypeScript + TailwindCSS + SOLID prensipleri
-- ✅ .env yapılandırması (12-Factor App uyumlu)
+Senior Frontend Developer pozisyonu için teknik değerlendirme amacıyla geliştirilmiştir.
 
 ---
 
-##  Kullanılan Teknolojiler
+## 🔐 Özellikler
 
-- [Next.js](https://nextjs.org/)
-- [NextAuth.js](https://next-auth.js.org/)
-- [Auth0](https://auth0.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [JWT](https://jwt.io/)
-
----
-
-##  Giriş Akışı
-
-1. Kullanıcı, Google ile Auth0 üzerinden giriş yapar.
-2. NextAuth, JWT ile session oluşturur.
-3. Token içine `role` (admin/user) claim olarak eklenir.
-4. Session üzerinden `user.role` bilgisi alınır.
-5. Middleware ile korunan sayfalara sadece ilgili role sahip kullanıcılar erişebilir.
+- Google ile **Auth0 OAuth giriş**
+- **JWT tabanlı oturum** yönetimi
+- **Middleware ile route koruması**
+- **Rol bazlı yetkilendirme** (admin / user)
+- Admin paneli: `/admin`
+- Yetkisiz erişim sayfası: `/unauthorized`
+- Dinamik **Navbar** (kullanıcı rolüne göre değişir)
+- **SOLID** ve **12-Factor App** prensiplerine uygun yapı
+- Jest + RTL ile temel **unit test**
 
 ---
 
-## 🧩 Role Tabanlı Yetkilendirme
+## 🚀 Kullanılan Teknolojiler
 
-| Sayfa       | Erişim          |
-|-------------|-----------------|
-| `/`         | Herkes          |
-| `/admin`    | Sadece admin    |
-| `/unauthorized` | Yetkisiz erişimler yönlendirilir |
+- **Next.js 14 (App Router)**
+- **Auth0** (OAuth sağlayıcısı)
+- **NextAuth.js**
+- **TailwindCSS**
+- **TypeScript**
+- **Jest + React Testing Library**
 
 ---
 
-##  .env.local 
+## 🛠️ Projeyi Çalıştırma
 
-AUTH0_CLIENT_ID=zesimg0hOdLFHo4QbbDqZ050IIXJqmmc
-AUTH0_CLIENT_SECRET=nIceuGE0iOypaiqtotRbSo87nX9IdT_jayNqYA268gotKplf06jcCLSKPlzixA0r
-AUTH0_ISSUER=https://dev-jti04v3lj8tay6zt.us.auth0.com
-NEXTAUTH_SECRET=88e9dfa50baada7358caf53e61ae2b91
+Bu adımlar, projeyi kendi bilgisayarında çalıştırmak isteyen herkes içindir:
+
+1. Reposu klonlayın:
+
+```bash
+git clone https://github.com/nurefsanb/next-auth.git
+cd next-auth
+```
+
+2. Bağımlılıkları kurun:
+
+```bash
+npm install
+```
+
+3. `.env.local` dosyasını oluşturun ve doldurun:
+
+```env
+AUTH0_CLIENT_ID=xxx
+AUTH0_CLIENT_SECRET=xxx
+AUTH0_ISSUER=https://xxx.auth0.com
+NEXTAUTH_SECRET=xxx
 NEXTAUTH_URL=http://localhost:3000
-AUTH0_ROLE_CLAIM=https://example.com/roles
+```
+
+4. Geliştirme sunucusunu başlatın:
+
+```bash
+npm run dev
+```
+
+5. Uygulamaya tarayıcıdan erişin:  
+[http://localhost:3000](http://localhost:3000)
+
+---
+
+## 🧪 Test Çalıştırma
+
+```bash
+npm test
+```
+
+Test altyapısı Jest + React Testing Library ile kuruludur.  
+Örnek test dosyası: `__tests__/Navbar.test.tsx`
+
+---
+
+## 🧱 Proje Yapısı
+
+```
+app/
+├── admin/              # Yalnızca admin erişimi
+├── unauthorized/       # Yetkisiz erişim uyarısı
+├── protected-route/    # Örnek korumalı sayfa
+├── client-provider.tsx
+components/
+├── Navbar.tsx          # Rol tabanlı navigasyon
+lib/
+├── auth/
+│   ├── options.ts      # NextAuth yapılandırması
+│   └── role.ts         # isAdmin/isUser yardımcıları
+middleware.ts           # Route koruma
+types/
+├── next-auth.d.ts      # Session'a role ekleme
+__tests__/
+├── Navbar.test.tsx     # Basit unit test
+```
+
+---
+
+## 🐳 Docker 
+
+```bash
+docker build -t next-auth-app .
+docker run -p 3000:3000 next-auth-app
+```
+
+---
+
+## ✅ Admin Rolü Nasıl Eklenir?
+
+Auth0 panelinden kullanıcıya özel bir claim tanımlayın:
+
+Örnek:
+
+```json
+{
+  "https://example.com/roles": ["admin"]
+}
+```
+
+Bu claim, JWT içinde yer alacak ve uygulama bunu `token.role` olarak alacaktır.
+
+---
+
+---
+
+## 📌 Geliştiren
+
+**Nurefsan B.**  
+[GitHub → nurefsanb](https://github.com/nurefsanb)
